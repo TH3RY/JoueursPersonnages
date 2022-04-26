@@ -149,6 +149,12 @@
     <ClInclude Include="JoueursPerso.h" />
     <ClInclude Include="Lexique.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Fichier.c" />
+    <ClCompile Include="Gestion.c" />
+    <ClCompile Include="Interface.c" />
+    <ClCompile Include="Principale.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

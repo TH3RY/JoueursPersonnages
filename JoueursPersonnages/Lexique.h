@@ -3,6 +3,8 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
+	#include <stdbool.h>
+	#include <ctype.h>
 	#include "Constantes.h"
 
 	#define FIFRANCAIS "Francais.txt"
@@ -38,6 +40,7 @@
 		SAUVEGARDE,
 		AUCUN_JOUEUR,
 		AUCUN_PERSONNAGE,
+		MODIFICATIONS_ANNULEES,
 		// Numéro de début des messages d'erreur
 		NUM_DEB_MESSAGE_ERREUR = 5000,
 	};

@@ -32,7 +32,7 @@
 5004 Ce personnage n'est pas disponible !
 5005 Ce personnage est deja present !
 5006 Les points doivent etre compris entre 1 et 999 inclus !
-5007 Le peudo doit commencer par une lettre majuscule !
+5007 Le pseudo doit commencer par une lettre majuscule !
 5008 Le nom doit commencer par une lettre !
 5009 La reponse doit etre soit 1 pour "oui", soit 2 pour "non".
 5010 Le nombre maximum de personnages est atteint !

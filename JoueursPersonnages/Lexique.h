@@ -5,6 +5,7 @@
 	#include <string.h>
 	#include <stdbool.h>
 	#include <ctype.h>
+	#include <malloc.h>
 	#include "Constantes.h"
 
 	#define FIFRANCAIS "Francais.txt"

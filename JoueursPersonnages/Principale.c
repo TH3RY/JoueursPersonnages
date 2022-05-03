@@ -1,5 +1,4 @@
 #include "JoueursPerso.h"
-#include <stdio.h>
 
 void main() {
 	Message* pLexique = NULL;

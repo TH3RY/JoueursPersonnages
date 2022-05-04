@@ -54,7 +54,6 @@ bool joueurExiste(Joueur* pDebJoueur, char pseudo[], Joueur** pJoueur, Joueur** 
 		*pSauvJoueur = *pJoueur;
 		*pJoueur = (*pJoueur)->pSuiv;
 	}
-	puts("x");
 	return (*pJoueur != NULL && strcmp(pseudo, (*pJoueur)->pseudo) == 0);
 }
 
@@ -101,7 +100,6 @@ void listeJoueur(Joueur* pDebJoueur) {
 int nbrPersonnages(Joueur* pJoueur) {
 	int nbr = 0;
 	Personnage* pPerso = pJoueur->pDebPerso;
-	printf("%p", pPerso);
 	while (pPerso != NULL) {
 		pPerso = pPerso->Psuiv;
 		nbr++;

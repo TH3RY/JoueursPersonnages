@@ -78,11 +78,56 @@ CodeErreur chargerJoueursPersonnages(Message* pLexique, Joueur** pDebJoueur) {
 	return codeErreur;
 }
 
-CodeErreur ajouterPersonnageAJoueur(Message* pLexique, Joueur** pDebJoueur, Joueur* pJoueur, Personnage* pNouvPerso) {
+CodeErreur ajouterJoueurPersonnages(Message* pLexique, Joueur** pDebJoueurs) {
+	Joueur* pNouvJoueur;
+	CodeErreur codeErreur;
+	bool allocationOk = nouveauJoueur(&pNouvJoueur);
+
+	if (!allocationOk) {
+		codeErreur = ALLOCATION_MEMOIRE;
+	}
+	else {
+		codeErreur = PAS_D_ERREUR;
+		afficherTitre(pLexique, TITRE_PERSO_AJOUT);
+		char pseudo[TPSEUDO];
+		pseudoObtenu(pLexique, pseudo);
+		Joueur* pJoueur;
+		Joueur* pSauvJoueur;
+		bool joueurPresent = joueurExiste(*pDebJoueurs, pseudo, &pJoueur, &pSauvJoueur);
+		if (joueurPresent) {
+			codeErreur = JOUEUR_DEJA_PRESENT;
+			libereJoueur(&pNouvJoueur);
+		}
+		else {
+			ajouteJoueur(pDebJoueurs, pseudo, &pNouvJoueur, &pJoueur, &pSauvJoueur);
+			bool allocationOk;
+			int reponse;
+			do
+			{
+				Personnage* pNouvPerso;
+				allocationOk = nouveauPersonnage(&pNouvPerso);
+				if (!allocationOk) {
+					codeErreur = ALLOCATION_MEMOIRE;
+				}
+				else {
+					codeErreur = ajouterPersonnageAJoueur(pLexique, pDebJoueurs, pNouvJoueur, pNouvPerso);
+
+					if (codeErreur == PAS_D_ERREUR) {
+						reponse = reponseObtenue(pLexique, OBT_ENCORE);
+					}
+				}
+			} while (allocationOk && codeErreur == PAS_D_ERREUR && reponse == OUI);
+		}
+	}
+	return codeErreur;
+}
+
+CodeErreur ajouterPersonnageAJoueur(Message* pLexique, Joueur** pDebJoueurs, Joueur* pJoueur, Personnage* pNouvPerso) {
 	CodeErreur codeErreur = PAS_D_ERREUR;
+
 	char nom[TNOM];
 	nomObtenu(pLexique, nom);
-	bool persoExiste = personnageExiste(*pDebJoueur, nom);
+	bool persoExiste = personnageExiste(*pDebJoueurs, nom);
 	if (persoExiste) {
 		codeErreur = PERSONNAGE_DEJA_PRESENT;
 		liberePersonnage(&pNouvPerso);
@@ -98,49 +143,6 @@ CodeErreur ajouterPersonnageAJoueur(Message* pLexique, Joueur** pDebJoueur, Joue
 			codeErreur = NB_MAX_PERSO_ATTEINT;
 		}
 
-	}
-	return codeErreur;
-}
-
-CodeErreur ajouterJoueurPersonnages(Message* pLexique, Joueur** pDebJoueur) {
-	Joueur* pNouvJoueur = NULL;
-	bool allocOK = nouveauJoueur(&pNouvJoueur);
-	CodeErreur codeErreur = PAS_D_ERREUR;
-	int reponse = 0;
-	if (!allocOK) {
-		codeErreur = ALLOCATION_MEMOIRE;
-	} else {
-		afficherTitre(pLexique, TITRE_JOUEUR_AJOUT);
-		char pseudo[TPSEUDO];
-		pseudoObtenu(pLexique, pseudo);
-		Joueur* pJoueur = NULL;
-		Joueur* pSauvJoueur = NULL;
-		nouveauJoueur(&pJoueur);
-		nouveauJoueur(&pSauvJoueur);
-		if (joueurExiste(*pDebJoueur, pseudo, &pJoueur, &pSauvJoueur)) {
-			libereJoueur(&pNouvJoueur);
-			libereJoueur(&pJoueur);
-			// libereJoueur(&pSauvJoueur);
-			codeErreur = JOUEUR_DEJA_PRESENT;
-		} else {
-			ajouteJoueur(pDebJoueur, pseudo, &pNouvJoueur, &pJoueur, &pSauvJoueur);
-			
-			
-			printf("%d", nbrPersonnages(pJoueur));
-			do {
-				Personnage* pNouvPerso = NULL;
-				allocOK = nouveauPersonnage(&pNouvPerso);
-
-				if (!allocOK) {
-					codeErreur = ALLOCATION_MEMOIRE;
-				} else {
-					codeErreur = ajouterPersonnageAJoueur(pLexique, pDebJoueur, pJoueur, pNouvPerso);
-					if (codeErreur == PAS_D_ERREUR) {
-						reponse = reponseObtenue(pLexique, OBT_ENCORE);
-					}
-				}
-			} while (allocOK && codeErreur == PAS_D_ERREUR && reponse == OUI);
-		}
 	}
 	return codeErreur;
 }
@@ -183,17 +185,16 @@ void afficherJoueursPersonnages(Message* pLexique, Joueur* pDebJoueur) {
 
 void dialogue(Message* pLexique) {
 	CodeErreur codeErreur = PAS_D_ERREUR;
-	Personnage x2 = { "Arya", 120, NULL};
-	Personnage x1 = { "Bryan", 75, &x2};
-	Personnage p3 = { "Legolas", 50, NULL};
-	Personnage p2 = { "Gimli", 50, &p3};
-	Personnage p1 = { "Aragorn", 100, &p2};
-	//Joueur j3 = { "Cock", NULL, NULL };
-	Joueur j2 = { "Cunegpnde", &x1, NULL };
-	Joueur j1 = { "Adalbert", &p1, &j2 };
+	//Personnage x2 = { "Arya", 120, NULL};
+	//Personnage x1 = { "Bryan", 75, &x2};
+	//Personnage p3 = { "Legolas", 50, NULL};
+	//Personnage p2 = { "Gimli", 50, &p3};
+	//Personnage p1 = { "Aragorn", 100, &p2};
+	////Joueur j3 = { "Cock", NULL, NULL };
+	//Joueur j2 = { "Cunegpnde", &x1, NULL };
+	//Joueur j1 = { "Adalbert", &p1, &j2 };
 
-	Joueur* pDebJoueurs = &j1;
-
+	Joueur* pDebJoueurs = NULL;
 	int choix = choixObtenu(pLexique, MENU_PRINCIPAL);
 	while (choix != QUITTER) {
 		switch (choix) {
@@ -207,12 +208,13 @@ void dialogue(Message* pLexique) {
 			codeErreur = ajouterPersonnage(pLexique, &pDebJoueurs);
 			break;
 		case SUPPRIMER_JOUEUR:
-
+			// codeErreur = supprimerJoueur()
 			break;
 		case AFFICHER_JOUEURS_PERSONNAGES:
 			afficherJoueursPersonnages(pLexique, pDebJoueurs);
 			break;
 		case SAUVER_JOUEURS_PERSONNAGES:
+			codeErreur = sauverJoueurs(pDebJoueurs);
 			break;
 		}
 		if (codeErreur != PAS_D_ERREUR) {

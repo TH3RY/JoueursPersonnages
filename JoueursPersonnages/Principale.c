@@ -12,7 +12,7 @@ void main() {
 			afficherMessage(pLexique, NUM_DEB_MESSAGE_ERREUR + FICHIER_INEXISTANT);
 		}
 	} else {
-		// dialogue(pLexique);
+		dialogue(pLexique);
 		libererLexique(pLexique);
 	}
 }

@@ -32,7 +32,7 @@ int reponseObtenue(Message* pLexique, int numMessage) {
 }
 
 void pseudoObtenu(Message* pLexique, char pseudo[]) {
-	bool pseudoValide;
+	bool pseudoValide = true;
 	do {
 		afficherMessage(pLexique, OBT_PSEUDO);
 		scanf_s(" %s", pseudo, TPSEUDO);
@@ -47,7 +47,7 @@ void pseudoObtenu(Message* pLexique, char pseudo[]) {
 int choixObtenu(Message* pLexique, int numMenu) {
 	int maxChoix;
 	int choix;
-	bool choixValide;
+	bool choixValide = true;
 	do {
 		maxChoix = afficherMenu(pLexique, numMenu);
 		afficherMessage(pLexique, OBT_CHOIX);
@@ -79,29 +79,34 @@ CodeErreur chargerJoueursPersonnages(Message* pLexique, Joueur** pDebJoueur) {
 }
 
 CodeErreur ajouterPersonnageAJoueur(Message* pLexique, Joueur** pDebJoueur, Joueur* pJoueur, Personnage* pNouvPerso) {
+	CodeErreur codeErreur = PAS_D_ERREUR;
 	char nom[TNOM];
 	nomObtenu(pLexique, nom);
-	if (personnageExiste(*pDebJoueur, nom)) {
+	bool persoExiste = personnageExiste(*pDebJoueur, nom);
+	if (persoExiste) {
+		codeErreur = PERSONNAGE_DEJA_PRESENT;
 		liberePersonnage(&pNouvPerso);
-		return PERSONNAGE_DEJA_PRESENT;
-	} else {
-		puts(nom);
-		printf("%d", nbrPersonnages(&pJoueur));
-		if (nbrPersonnages(pJoueur) < NBMAXPERSO) {
-			puts("x");
-			ajoutePersonnage(pJoueur, nom, pointsObtenus(pLexique), pNouvPerso);
-		} else {
-			return NB_MAX_PERSO_ATTEINT;
-		}
 	}
-	return PAS_D_ERREUR;
+	else {
+		int nbrPerso = nbrPersonnages(pJoueur);
+		if (nbrPerso < NBMAXPERSO) {
+			int points = pointsObtenus(pLexique);
+
+			ajoutePersonnage(pJoueur, nom, points, pNouvPerso);
+		}
+		else {
+			codeErreur = NB_MAX_PERSO_ATTEINT;
+		}
+
+	}
+	return codeErreur;
 }
 
 CodeErreur ajouterJoueurPersonnages(Message* pLexique, Joueur** pDebJoueur) {
 	Joueur* pNouvJoueur = NULL;
 	bool allocOK = nouveauJoueur(&pNouvJoueur);
 	CodeErreur codeErreur = PAS_D_ERREUR;
-	int reponse;
+	int reponse = 0;
 	if (!allocOK) {
 		codeErreur = ALLOCATION_MEMOIRE;
 	} else {
@@ -118,7 +123,10 @@ CodeErreur ajouterJoueurPersonnages(Message* pLexique, Joueur** pDebJoueur) {
 			// libereJoueur(&pSauvJoueur);
 			codeErreur = JOUEUR_DEJA_PRESENT;
 		} else {
-			ajouteJoueur(pDebJoueur, pseudo, pNouvJoueur, pJoueur, pSauvJoueur);
+			ajouteJoueur(pDebJoueur, pseudo, &pNouvJoueur, &pJoueur, &pSauvJoueur);
+			
+			
+			printf("%d", nbrPersonnages(pJoueur));
 			do {
 				Personnage* pNouvPerso = NULL;
 				allocOK = nouveauPersonnage(&pNouvPerso);
@@ -185,28 +193,6 @@ void dialogue(Message* pLexique) {
 	Joueur j1 = { "Adalbert", &p1, &j2 };
 
 	Joueur* pDebJoueurs = &j1;
-	
-	/*Joueur* pJoueurSauv = NULL;
-	Joueur* pJoueur = NULL;
-	
-	nouveauJoueur(&pJoueurSauv);
-	nouveauJoueur(&pJoueur);
-
-	printf("\n%p\n", pJoueur);
-	printf("%p\n", pJoueurSauv);
-	printf(joueurExiste(pDebJoueurs, "Test", &pJoueur, &pJoueurSauv) ? "oui" : "nn");
-	printf("\n%s\n", pJoueur->pseudo);
-	printf("%s\n", pJoueurSauv->pseudo);
-	printf(personnageExiste(pDebJoueurs, "Test") ? "oui" : "nn");
-	printf("\n%p\n", pJoueur);
-	printf("%p\n", pJoueurSauv);
-
-	libereJoueur(&pJoueur);
-	if (pJoueurSauv == NULL) puts("x");*/
-	
-
-	// libereJoueur(pJoueur);
-	// libereJoueur(pJoueurSauv);
 
 	int choix = choixObtenu(pLexique, MENU_PRINCIPAL);
 	while (choix != QUITTER) {

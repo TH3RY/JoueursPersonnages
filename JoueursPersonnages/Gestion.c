@@ -21,15 +21,16 @@ void liberePersonnage(Personnage** pPerso) {
 
 }
 
-void ajouteJoueur(Joueur** pDebJoueur, char pseudo[], Joueur* pNouvJoueur, Joueur* pJoueur,Joueur* pSauvJoueur) {
-	strcpy_s(pNouvJoueur->pseudo, TPSEUDO, pseudo);
-	pNouvJoueur->pDebPerso = NULL;
-	if (pJoueur == *pDebJoueur) {
-		*pDebJoueur = pNouvJoueur;
+void ajouteJoueur(Joueur** pDebJoueur, char pseudo[], Joueur** pNouvJoueur, Joueur** pJoueur,Joueur** pSauvJoueur) {
+	strcpy_s((*pNouvJoueur)->pseudo, TPSEUDO, pseudo);
+	(*pNouvJoueur)->pDebPerso = NULL;
+	if (*pJoueur == *pDebJoueur) {
+		*pDebJoueur = *pNouvJoueur;
 	} else {
-		pSauvJoueur->pSuiv = pNouvJoueur;
+		(*pSauvJoueur)->pSuiv = *pNouvJoueur;
 	}
-	pNouvJoueur->pSuiv = pJoueur;
+	(*pNouvJoueur)->pSuiv = *pJoueur;
+
 }
 
 void supprimerJoueur(Joueur** pDebJoueur, Joueur* pJoueur, Joueur* pSauvJoueur) {
@@ -97,14 +98,13 @@ void listeJoueur(Joueur* pDebJoueur) {
 	PAUSE;
 }
 
-int nbrPersonnages(Joueur** pJoueur) {
+int nbrPersonnages(Joueur* pJoueur) {
 	int nbr = 0;
-	Personnage* pPerso = (*pJoueur)->pDebPerso;
-	nouveauPersonnage(&pPerso);
+	Personnage* pPerso = pJoueur->pDebPerso;
 	printf("%p", pPerso);
 	while (pPerso != NULL) {
-		nbr++;
 		pPerso = pPerso->Psuiv;
+		nbr++;
 	}
 	return nbr;
 }

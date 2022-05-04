@@ -21,6 +21,8 @@ struct joueur {
 };
 
 CodeErreur fichierExiste();
+CodeErreur sauverJoueurs(Joueur* pDebJoueurs);
+// CodeErreur chargerJoueurs(Joueur** pDebJoueurs);
 // -------------------
 void nomObtenu(Message* pLexique, char nomObtenu[]);
 void dialogue(Message* pLexique);
@@ -33,14 +35,14 @@ int choixObtenu(Message* pLexique, int numMenu);
 bool nouveauJoueur(Joueur** pNouvJoueur);
 bool nouveauPersonnage(Personnage** pNouvPerso);
 void libereJoueur(Joueur** pJoueur);
-void ajouteJoueur(Joueur** pDebJoueur, char pseudo[], Joueur* pNouvJoueur, Joueur* pJoueur, Joueur* pSauvJoueur);
+void ajouteJoueur(Joueur** pDebJoueur, char pseudo[], Joueur** pNouvJoueur, Joueur** pJoueur, Joueur** pSauvJoueur);
 void liberePersonnage(Personnage** pPerso);
 void supprimerJoueur(Joueur** pDebJoueur, Joueur* pJoueur, Joueur* pSauvJoueur);
 bool joueurExiste(Joueur* pDebJoueur, char pseudo[], Joueur** pJoueur, Joueur** pSauvJoueur);
 bool personnageExiste(Joueur* pDebJoueur, char nom[]);
 void ajoutePersonnage(Joueur* pJoueur, char nom[], int points, Personnage* pNouvPerso);
 void listeJoueur(Joueur* pDebJoueur);
-int nbrPersonnages(Joueur** pJoueur);
+int nbrPersonnages(Joueur* pJoueur);
 void libereJoueursPersonnages(Joueur** pDebJoueur);
 
 CodeErreur chargerJoueursPersonnages(Message* pLexique, Joueur** pDebJoueur);

@@ -69,10 +69,10 @@ CodeErreur chargerJoueursPersonnages(Message* pLexique, Joueur** pDebJoueur) {
 			int reponse = reponseObtenue(pLexique, OBT_CONTINUER);
 			if (reponse == OUI) {
 				libereJoueursPersonnages(pDebJoueur);
-				//chargerJoueurs
+				codeErreur = chargerJoueurs(pDebJoueur);
 			}
 		} else {
-			//chargerJoueurs
+			codeErreur = chargerJoueurs(pDebJoueur);
 		}
 	}
 	return codeErreur;

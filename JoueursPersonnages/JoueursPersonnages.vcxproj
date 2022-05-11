@@ -156,6 +156,9 @@
     <ClCompile Include="Interface.c" />
     <ClCompile Include="Principale.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="joueurs.dat" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

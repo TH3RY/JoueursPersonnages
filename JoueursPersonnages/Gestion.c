@@ -77,6 +77,7 @@ void ajoutePersonnage(Joueur* pJoueur, char nom[], int points, Personnage * pNou
 	strcpy_s(pNouvPerso->nom, TNOM, nom);
 	pNouvPerso->nbXp = points;
 	pNouvPerso->Psuiv = pJoueur->pDebPerso;
+
 	pJoueur->pDebPerso = pNouvPerso;
 }
 

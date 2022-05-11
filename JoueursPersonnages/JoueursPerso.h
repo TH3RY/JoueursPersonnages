@@ -20,10 +20,20 @@ struct joueur {
 	Joueur* pSuiv;
 };
 
+typedef struct joueurSauv jSauve;
+struct joueurSauv {
+	char pseudo[TPSEUDO];
+	int nbPerso;
+};
+typedef struct persoSauv pSauve;
+struct persoSauv {
+	char nom[TNOM];
+	int nbXp;
+};
 
 CodeErreur fichierExiste();
 CodeErreur sauverJoueurs(Joueur* pDebJoueurs);
-// CodeErreur chargerJoueurs(Joueur** pDebJoueurs);
+CodeErreur chargerJoueurs(Joueur** pDebJoueurs);
 // -------------------
 void nomObtenu(Message* pLexique, char nomObtenu[]);
 void dialogue(Message* pLexique);

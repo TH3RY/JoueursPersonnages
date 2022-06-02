@@ -32,17 +32,20 @@ int choixObtenu(Message* pLexique, int numMenu);
 // -------------------
 bool nouveauJoueur(Joueur** pNouvJoueur);
 bool nouveauPersonnage(Personnage** pNouvPerso);
-void libereJoueur(Joueur* pJoueur);
+void libereJoueur(Joueur** pJoueur);
 void ajouteJoueur(Joueur** pDebJoueur, char pseudo[], Joueur* pNouvJoueur, Joueur* pJoueur, Joueur* pSauvJoueur);
-void liberePersonnage(Personnage* pPerso);
+void liberePersonnage(Personnage** pPerso);
 void supprimerJoueur(Joueur** pDebJoueur, Joueur* pJoueur, Joueur* pSauvJoueur);
 bool joueurExiste(Joueur* pDebJoueur, char pseudo[], Joueur** pJoueur, Joueur** pSauvJoueur);
 bool personnageExiste(Joueur* pDebJoueur, char nom[]);
 void ajoutePersonnage(Joueur* pJoueur, char nom[], int points, Personnage* pNouvPerso);
 void listeJoueur(Joueur* pDebJoueur);
-int nbrPersonnages(Joueur* pJoueur);
+int nbrPersonnages(Joueur** pJoueur);
 void libereJoueursPersonnages(Joueur** pDebJoueur);
 
-
-
+CodeErreur chargerJoueursPersonnages(Message* pLexique, Joueur** pDebJoueur);
+CodeErreur ajouterPersonnageAJoueur(Message* pLexique, Joueur** pDebJoueur, Joueur* pJoueur, Personnage* pNouvPerso);
+CodeErreur ajouterJoueurPersonnages(Message* pLexique, Joueur** pDebJoueur);
+CodeErreur ajouterPersonnage(Message* pLexique, Joueur** pDebJoueur);
+void afficherJoueursPersonnages(Message* pLexique, Joueur* pDebJoueur);
 #endif // !JOUEURSPERSO_H
